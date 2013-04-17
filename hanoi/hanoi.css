@@ -1,0 +1,56 @@
+.container {
+  display:block;
+  width: 100%;
+}
+
+.tower {
+  height: 200px;
+  width: 150px;
+  background-color: sienna;
+  float: left;
+  margin-left: 20px;
+  text-align: center;
+  position: relative;
+
+}
+
+.clear {
+  clear: both;
+}
+
+.selected {
+  opacity: .5;
+}
+
+.notifier {
+  text-align: center;
+  display:block;
+}
+
+.illegal {
+  background-color: red;
+}
+
+.disc {
+  height: 30px;
+  background-color: black;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#disc1 {
+  width: 30px;
+
+}
+
+#disc2 {
+  width: 50px;
+
+}
+
+#disc3 {
+  width: 70px;
+
+}

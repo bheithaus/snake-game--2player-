@@ -1,0 +1,21 @@
+.container {
+}
+
+.board {
+}
+
+.title {
+}
+
+.row {}
+
+
+.square {
+  display: inline-block;
+  margin: 5px;
+  background-color: sienna;
+  height: 150px;
+  width: 150px;
+}
+
+.notifier {}

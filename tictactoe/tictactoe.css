@@ -2,6 +2,9 @@
 }
 
 .board {
+  width: 490px;
+  height: 490px;
+  background-color:black;
 }
 
 .title {
@@ -9,13 +12,21 @@
 
 .row {}
 
+.x {
+  background-image:url('images/x.jpeg');
+}
+
+.o {
+  background-image:url('images/o.jpeg');
+}
 
 .square {
   display: inline-block;
   margin: 5px;
-  background-color: sienna;
+  background-color: white;
   height: 150px;
   width: 150px;
+  clear: none;
 }
 
 .notifier {}

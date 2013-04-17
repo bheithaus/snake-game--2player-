@@ -4,14 +4,21 @@
 }
 
 .tower {
-  height: 200px;
-  width: 150px;
+  height: 170px;
+  width: 110px;
   background-color: sienna;
   float: left;
   margin-left: 20px;
   text-align: center;
   position: relative;
+}
 
+.disc-container {
+  position: absolute;
+  bottom: 0;
+  left:50%;
+  margin-left:-35px;
+  width: 70px;
 }
 
 .clear {
@@ -19,7 +26,7 @@
 }
 
 .selected {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .notifier {
@@ -35,22 +42,18 @@
   height: 30px;
   background-color: black;
   margin-bottom: 20px;
-  margin-top: 10px;
   margin-right: auto;
   margin-left: auto;
 }
 
 #disc1 {
   width: 30px;
-
 }
 
 #disc2 {
   width: 50px;
-
 }
 
 #disc3 {
   width: 70px;
-
 }

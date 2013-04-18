@@ -15,18 +15,34 @@ Controller.prototype.turn = function(keyCode) {
   console.log(keyCode);
   switch (keyCode) {
     case (37):
-      this.game.snake.turn("west");
+      this.game.snakes[0].turn("west");
       break;
     case (38):
-      this.game.snake.turn("north");
+      this.game.snakes[0].turn("north");
     //north
       break;
     case (39):
-      this.game.snake.turn("east");
+      this.game.snakes[0].turn("east");
     //east
       break;
     case (40):
-      this.game.snake.turn("south");
+      this.game.snakes[0].turn("south");
+    //south
+      break;
+      // Snake 2!
+    case (65):
+      this.game.snakes[1].turn("west");
+      break;
+    case (87):
+      this.game.snakes[1].turn("north");
+    //north
+      break;
+    case (68):
+      this.game.snakes[1].turn("east");
+    //east
+      break;
+    case (83):
+      this.game.snakes[1].turn("south");
     //south
       break;
   }
@@ -35,10 +51,16 @@ Controller.prototype.turn = function(keyCode) {
 Controller.prototype.render = function() {
   var controller = this;
   controller.clear();
-  controller.drawCircle(this.game.snake.body[0], 'black');
-  _.each(this.game.snake.body.slice(1), function(el) {
+  controller.drawCircle(this.game.snakes[0].body[0], 'black');
+  _.each(this.game.snakes[0].body.slice(1), function(el) {
     controller.drawCircle(el, '#435E3B');
   });
+
+  controller.drawCircle(this.game.snakes[1].body[0], 'blue');
+  _.each(this.game.snakes[1].body.slice(1), function(el) {
+    controller.drawCircle(el, '#435E3B');
+  });
+
   _.each(this.game.food, function(el) {
     controller.drawCircle(el, '#9C1C1C');
   });
@@ -46,7 +68,6 @@ Controller.prototype.render = function() {
 }
 
 Controller.prototype.clear = function() {
-  console.log(this.game.snake.body.length);
   this.context.clearRect(0,0,500,500);
 }
 
@@ -62,7 +83,9 @@ Controller.prototype.drawScore = function() {
   context.font = "bold 12px sans-serif";
   context.textAlign = "left";
   context.fillStyle = "black";
-  context.fillText("Score: " + this.game.snake.length, 435, 15);
+  context.fillText("Score: " + this.game.snakes[0].length, 435, 15);
+  context.fillStyle = "blue";
+  context.fillText("Score: " + this.game.snakes[1].length, 435, 40);
 }
 
 Controller.prototype.drawPrompt = function(text, color) {
@@ -89,7 +112,14 @@ Controller.prototype.runStep = function() {
   if ( !controller.game.lose() ) {
     controller.runLoop();
   } else {
-    controller.drawPrompt("You Lose! Click to Restart." , "red");
+    var losers = controller.game.lose();
+    var lostText = "";
+    if (losers !== -1) {
+      lostText = "Player " + losers + " loses!";
+    } else {
+      lostText = "Tie game!"
+    }
+    controller.drawPrompt(lostText + " Click to Restart." , "red");
     controller.reset();
     controller.addStartHandler();
   }
@@ -108,13 +138,13 @@ Controller.prototype.runLoop = function() {
 }
 
 Controller.prototype.stepTime = function() {
-  console.log(100 - this.game.snake.length);
-  return 100 - this.game.snake.length;
+  return 125 - this.game.snakes[0].length - this.game.snakes[1].length;
 }
 
 
 $(function() {
   var controller = new Controller()
+  console.log(controller.game.snakes);
   controller.addHandler();
   controller.addStartHandler();
   controller.drawPrompt("Start Game", "#818267");

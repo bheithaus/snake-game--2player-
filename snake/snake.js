@@ -1,18 +1,7 @@
 function Game(boardSize) {
   this.boardSize = boardSize;
   this.snake = new Snake(Math.floor(boardSize/2));
-  this.food = [[5, 5]];
-
-  //test for collisions
-  //self, food, edge
-
-  //step
-
-  //points
-
-  //
-
-
+  this.food = [this.randomCoord()];
 }
 
 Game.prototype.step = function () {
@@ -23,10 +12,6 @@ Game.prototype.step = function () {
     this.snake.eat();
     this.food.pop();
     this.generateFood(1);
-  }
-
-  if ( this.lose() ) {
-    console.log("ya lose!!");
   }
 }
 
@@ -48,14 +33,9 @@ Game.prototype.generateFood = function(amount) {
 }
 
 Game.prototype.hitFood = function() {
-  return this.includes(this.food, this.snake.body[0]);
+  return includes(this.food, this.snake.body[0]);
 }
 
-Game.prototype.includes = function(arr, target) {
-  return _.some(arr, function(el) {
-    return target[0] == el[0] && target[1] == el[1]
-  });
-}
 Game.prototype.lose = function() {
   return this.snake.oroborus();
 }
@@ -78,14 +58,17 @@ Game.prototype.boundsOneWay = function(position) {
 function Snake(start) {
   this.length = 5;
   this.body = [[start, start]];
+  this.oldDirection = [1,0];
   this.direction = [1,0];
 }
 
 Snake.prototype.oroborus = function() {
-  return _.include(this.body.slice(1), this.body[0]);
+  var head = this.body[0];
+  return includes(this.body.slice(1), head);
 }
 
 Snake.prototype.move = function() {
+  this.oldDirection = this.direction;
   var newPosition = this.addVector(this.body[0], this.direction);
   this.body.unshift(this.addVector(this.body[0], this.direction));
   if (this.body.length > this.length) {
@@ -101,28 +84,46 @@ Snake.prototype.addVector = function(position, vector) {
   return [position[0] + vector[0], position[1] + vector[1]];
 }
 
-Snake.prototype.turn = function(direction) {
+Snake.prototype.turn = function(cardinals) {
   var newDirection;
-  switch (direction) {
-    case "north":
+  switch (cardinals) {
+    case "east":
       newDirection = [1, 0];
       break;
-    case "south":
+    case "west":
       newDirection = [-1, 0];
       break;
-    case "west":
+    case "north":
       newDirection = [0, -1];
       break;
-    case "east":
+    case "south":
       newDirection = [0, 1];
       break;
   }
-  if (this.addVector(newDirection,direction) === [0,0] || newDirection === direction) {
+
+  if (this.compareCoord(this.addVector(newDirection, this.oldDirection),[0,0])) {
+    return false;
+  } else if (this.compareCoord(newDirection, this.oldDirection)) {
     return false;
   } else {
     this.direction = newDirection;
     return true;
   }
+}
+
+Snake.prototype.compareCoord = function(coord1, coord2) {
+  if (coord1[0] === coord2[0] && coord1[1] === coord2[1]) {
+    return true;
+  }
+  return false;
+}
+
+
+//library functions
+var includes = function(arr, target) {
+  return _.some(arr, function(el) {
+    return target[0] === el[0] && target[1] === el[1]
+  });
 }
 // game = new Game(50);
 // console.log(game.snake.body);

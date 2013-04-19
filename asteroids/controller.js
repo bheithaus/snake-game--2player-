@@ -8,12 +8,6 @@ Controller.prototype.render = function() {
   this.renderBullets();
   this.renderShip();
   this.renderAsteroids();
-
-  //render ship
-  //render asteroids
-  //render bullets
-
-
 }
 
 Controller.prototype.addEventHandler = function() {
@@ -44,7 +38,6 @@ Controller.prototype.startTurn = function(keyCode) {
     // console.log("firing!!");
       this.game.ship.firing = true;
       break;
-    //case (40):
   }
 }
 
@@ -60,10 +53,8 @@ Controller.prototype.stopTurn = function(keyCode) {
       this.game.ship.turning = 0;
       break;
     case (32):
-    // console.log("not!!");
       this.game.ship.firing = false;
       break;
-    //case (40):
   }
 }
 
@@ -135,7 +126,6 @@ Controller.prototype.clear = function() {
 
 Controller.prototype.animLoop = function() {
   var controller = this;
-  // console.log(this);
   if (controller.game.alive) {
     window.requestAnimFrame(controller.animLoop.bind(controller));
     controller.game.update();
@@ -160,10 +150,6 @@ $(function() {
   canvas.appendTo($('body'));
   var controller = new Controller(canvas.get(0));
   controller.game.spawnAsteroids(10);
-  // console.log(controller.game.asteroids);
   controller.addEventHandler();
   controller.animLoop();
-
-
-
 });

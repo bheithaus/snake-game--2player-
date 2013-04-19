@@ -1,8 +1,3 @@
-//game numbers
-
-
-
-
 
 Array.prototype.remove = function(from, to) {
   var rest = this.slice((to || from) + 1 || this.length);
@@ -76,14 +71,10 @@ Game.prototype.spawnAsteroids = function(n) {
 }
 
 Game.prototype.spawnShip = function() {
-  // lives --
-  // spawn ship at some place on screen
 }
 
 Game.prototype.shootBullet = function() {
   this.bullets.push(this.ship.shoot());
-  // console.log(this.bullets);
-  //this calls ship.shoot
 }
 
 Game.prototype.checkBounds = function(object) {
@@ -101,8 +92,6 @@ Game.prototype.checkBounds = function(object) {
 
   }
   return positionVector;
-  // check based on radius & borders
-  // returns true or false
 }
 
 Game.prototype.updateBullets = function() {
@@ -116,11 +105,6 @@ Game.prototype.updateBullets = function() {
     }
   }
   this.bullets = newBullets;
-  // loop through bulelts
-  //bullet.move
-  //check collision with asteroids, if collision, reduce asteroid radius
-    // remove asteroid if radius below certain threshold
-  //check bounds, remove if out of bounds
 }
 
 Game.prototype.updateShip = function() {
@@ -129,8 +113,6 @@ Game.prototype.updateShip = function() {
   if (this.ship.firing) {
     this.shootBullet();
   }
-  //check bounds and move to other side if out of bounds
-  // check collision asteroids
 }
 
 Game.prototype.updateAsteroids = function() {
@@ -141,9 +123,6 @@ Game.prototype.updateAsteroids = function() {
     asteroids[i].position = this.checkBounds(asteroids[i]);
     // console.log(asteroids[i].position);
   }
-  //loop through asteroids
-  //asteroid.move
-  //check bounds
 }
 
 Game.prototype.lose = function() {

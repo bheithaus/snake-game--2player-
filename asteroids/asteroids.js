@@ -47,8 +47,6 @@ Ship.prototype.turn = function(cardinal) {
 Ship.prototype.accelerate = function() {
   this.vector = helpers.addCoords(this.vector,
           helpers.scaleArray(helpers.convertDirection(this.direction), .45));
-  // change vector
-  // based on vector and direction
 }
 
 Ship.prototype.move = function() {
@@ -58,21 +56,13 @@ Ship.prototype.move = function() {
   this.direction += 0.2 * this.turning;
   this.position = helpers.move(this);
   this.decayVector(.98);
-  //change position based on vector & velocity
-  // decay velocity
 }
 
 Ship.prototype.decayVector = function (scalar) {
   this.vector = helpers.scaleArray(this.vector, scalar);
 }
 
-//Ship.prototype.convertDirection = function() {
-  // returns vector based on direction in radians
-//}
-
 Ship.prototype.shoot = function() {
   return new Bullet(2, this.position,
     helpers.scaleArray(helpers.convertDirection(this.direction), 7));
-  //return bullet with pos = ship + direction offset,
-  //vector == ships direction
 }

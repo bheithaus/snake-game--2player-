@@ -111,6 +111,7 @@ Controller.prototype.bindClickHandler = function() {
   $('html').on('click', function() {
     controller.reset();
     $(this).off('click');
+	controller.animLoop();
   });
 }
 

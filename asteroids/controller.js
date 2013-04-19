@@ -41,7 +41,7 @@ Controller.prototype.startTurn = function(keyCode) {
       this.game.ship.turning = 1;
       break;
     case (32):
-    console.log("firing!!");
+    // console.log("firing!!");
       this.game.ship.firing = true;
       break;
     //case (40):
@@ -60,7 +60,7 @@ Controller.prototype.stopTurn = function(keyCode) {
       this.game.ship.turning = 0;
       break;
     case (32):
-    console.log("not!!");
+    // console.log("not!!");
       this.game.ship.firing = false;
       break;
     //case (40):
@@ -126,9 +126,6 @@ Controller.prototype.bindClickHandler = function() {
 Controller.prototype.reset = function() {
   this.game = new Game(500);
   this.game.spawnAsteroids(10);
-
-  window.requestAnimFrame(this.animLoop.bind(this));
-
 }
 
 
@@ -138,7 +135,7 @@ Controller.prototype.clear = function() {
 
 Controller.prototype.animLoop = function() {
   var controller = this;
-  console.log(this);
+  // console.log(this);
   if (controller.game.alive) {
     window.requestAnimFrame(controller.animLoop.bind(controller));
     controller.game.update();
@@ -161,10 +158,9 @@ window.requestAnimFrame = (function(){
 $(function() {
   var canvas = $('<canvas width="500" height="500"></canvas>');
   canvas.appendTo($('body'));
-
   var controller = new Controller(canvas.get(0));
   controller.game.spawnAsteroids(10);
-  console.log(controller.game.asteroids);
+  // console.log(controller.game.asteroids);
   controller.addEventHandler();
   controller.animLoop();
 

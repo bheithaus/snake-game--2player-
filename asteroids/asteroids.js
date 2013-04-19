@@ -2,21 +2,28 @@ function Asteroid(radius, pos, vector) {
   this.radius = radius;
   this.position = pos;
   this.vector = vector;
+  this.color = this.randomColor();
+}
+
+Asteroid.prototype.randomColor = function() {
+  return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 
 Asteroid.prototype.move = function() {
-  //modify position by vector
-
+  this.position = helpers.move(this);
 }
 
 Asteroid.prototype.damage = function(amount) {
-  //radius reduced by amount
+  this.radius = this.radius - amount < 10 ? 0 : this.radius - amount;
 }
 
 function Bullet(radius, pos, vector) {
   this.radius = radius;
   this.position = pos;
   this.vector = vector;
+}
+Bullet.prototype.move = function() {
+  this.position = helpers.move(this);
 }
 
 function Ship() {
@@ -26,6 +33,7 @@ function Ship() {
   this.direction = Math.PI/2; //radians
   this.turning = 0;
   this.accelerating = false;
+  this.firing = false;
 }
 
 Ship.prototype.turn = function(cardinal) {
@@ -63,114 +71,8 @@ Ship.prototype.decayVector = function (scalar) {
 //}
 
 Ship.prototype.shoot = function() {
+  return new Bullet(2, this.position,
+    helpers.scaleArray(helpers.convertDirection(this.direction), 7));
   //return bullet with pos = ship + direction offset,
   //vector == ships direction
-  //radius == gun dependent
 }
-
-var helpers = (function() {
-
-  var convertDirection = function (radians) {
-    return [Math.cos(radians), Math.sin(radians)];
-    //return vector
-  }
-  var move = function(object) {
-    return helpers.addCoords(object.position, object.vector);
-    //object.position += object.vector
-  }
-  var scaleArray = function(array, scalar) {
-    return [array[0] * scalar, array[1] * scalar];
-  }
-
-  var addCoords = function(coord1, coord2) {
-    return [coord1[0] + coord2[0], coord1[1] + coord2[1]];
-  }
-
-  return {
-    convertDirection: convertDirection,
-    move: move,
-    addCoords: addCoords,
-    scaleArray: scaleArray
-  }
-})();
-
-function Game(length) {
-  this.asteroids = [];
-  this.ship = new Ship();
-  this.bullets = [];
-  this.length = length;
-  this.lives = 3;
-}
-
-
-Game.prototype.update = function() {
-  this.updateShip();
-  // update bullets
-  // update ship
-  // update asteriods
-}
-
-Game.prototype.checkCollision = function(obj1, obj2) {
-  //test for collision return true or false
-
-}
-
-Game.prototype.randomAsteroid = function() {
-  //spawns a new random asteroid (off screen)
-
-}
-
-Game.prototype.spawnShip = function() {
-  // lives --
-  // spawn ship at some place on screen
-}
-
-Game.prototype.shootBullet = function() {
-  // calls on ship.shoot, pushes into bullets array
-}
-
-Game.prototype.checkBounds = function(object) {
-  positionVector = object.position.slice(0);
-  if (object.position[0]+object.radius <= 0) {
-    positionVector[0] = this.length - object.radius;
-  } else if (object.position[0]-object.radius >= this.length) {
-    positionVector[0] = object.radius;
-  }
-
-  if (object.position[1]+object.radius <= 0) {
-    positionVector[1] = this.length - object.radius;
-  } else if (object.position[1]-object.radius >= this.length) {
-    positionVector[1] = object.radius;
-
-  }
-  return positionVector;
-  // check based on radius & borders
-  // returns true or false
-}
-
-Game.prototype.updateBullets = function() {
-  // loop through bulelts
-  //bullet.move
-  //check collision with asteroids, if collision, reduce asteroid radius
-    // remove asteroid if radius below certain threshold
-  //check bounds, remove if out of bounds
-}
-
-Game.prototype.updateShip = function() {
-  this.ship.move();
-  this.ship.position = this.checkBounds(this.ship);
-  //check bounds and move to other side if out of bounds
-  // check collision asteroids
-}
-
-Game.prototype.updateAsteroids = function() {
-  //loop through asteroids
-  //asteroid.move
-  //check bounds
-}
-
-Game.prototype.lose = function() {
-  // return true if lives < 0
-}
-
-
